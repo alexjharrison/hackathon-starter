@@ -14,7 +14,9 @@ services:
     depends_on:
       - "postgres"
     environment:
-      DB_NAME: postgres
+      DB_NAME: auth
+      TOKEN_KEY: 123456
+
   postgres:
     image: postgres:12
     restart: always
@@ -23,6 +25,8 @@ services:
       - ./postgres/migrations:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - "5432:5432"
   hasura:
     image: hasura/graphql-engine:v2.0.9
     ports:

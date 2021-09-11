@@ -1,23 +1,24 @@
 import { Request, Response, Router } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { pg } from "./postgres";
+import { User } from "./types";
 
 const router = Router();
 
 const tokenKey: string = process.env.TOKEN_KEY || "";
-
 //for testing
 //password is "password123"
-let users = [
-  {
-    id: 2,
-    first_name: "bob",
-    last_name: "woodward",
-    email: "test1@example.com",
-    encrypted_password:
-      "$2b$10$KxGP2/Y.TxUJScVBXrF2q.19Ebi8HGg/Y00EkO/CjhkHyJqmRR29K",
-  },
-];
+// let users = [
+//   {
+//     id: 2,
+//     first_name: "bob",
+//     last_name: "woodward",
+//     email: "test1@example.com",
+//     encrypted_password:
+//       "$2b$10$KxGP2/Y.TxUJScVBXrF2q.19Ebi8HGg/Y00EkO/CjhkHyJqmRR29K",
+//   },
+// ];
 
 router.post("/login", async (req: Request, res: Response) => {
   // Our login logic starts here
@@ -27,7 +28,10 @@ router.post("/login", async (req: Request, res: Response) => {
     if (!(email && password)) {
       res.status(400).send("All input is required");
     }
-    const user = users.find((u) => u.email == email);
+    // const user = users.find((u) => u.email == email);
+    const user: User = (
+      await pg.query(`select * from users where email=$1`, [email])
+    ).rows[0];
 
     if (user && (await bcrypt.compare(password, user.encrypted_password))) {
       // Create token
@@ -65,7 +69,10 @@ router.post("/register", async (req: Request, res: Response) => {
     }
     // check if user already exists
     // Validate if user exist in our database
-    const oldUser = users.find((u) => u.email == email);
+    // const oldUser = users.find((u) => u.email == email);
+    const oldUser: User = (
+      await pg.query(`select * from users where email=$1`, [email])
+    ).rows[0];
     if (oldUser) {
       return res.status(409).send("User Already Exists. Please Login");
     }
@@ -80,7 +87,7 @@ router.post("/register", async (req: Request, res: Response) => {
       email,
       encrypted_password,
     };
-    users.push(newUser);
+    // users.push(newUser);
     //
     const token = jwt.sign(
       {
