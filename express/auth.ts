@@ -80,15 +80,12 @@ router.post("/register", async (req: Request, res: Response) => {
     let encrypted_password = await bcrypt.hash(password, 10);
     //create user
     const id = Math.floor(Math.random() * 10000);
-    const newUser = {
-      id,
-      first_name,
-      last_name,
-      email,
-      encrypted_password,
-    };
-    // users.push(newUser);
-    //
+    const newUser: User = (
+      await pg.query(
+        `insert into users (first_name, last_name, encrypted_password, email) VALUES ($1, $2, $3, $4) returning id, first_name, last_name, encrypted_password, email`,
+        [first_name, last_name, encrypted_password, email]
+      )
+    ).rows[0];
     const token = jwt.sign(
       {
         "https://hasura.io/jwt/claims": {

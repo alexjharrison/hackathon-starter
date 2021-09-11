@@ -18,7 +18,10 @@ services:
       TOKEN_KEY: 123456
 
   postgres:
-    image: postgres:12
+    # image: postgres:12
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
     restart: always
     volumes:
       - db_data:/var/lib/postgresql/data
