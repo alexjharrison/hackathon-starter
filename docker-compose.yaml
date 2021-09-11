@@ -13,11 +13,14 @@ services:
       - .env
     depends_on:
       - "postgres"
+    environment:
+      DB_NAME: postgres
   postgres:
     image: postgres:12
     restart: always
     volumes:
       - db_data:/var/lib/postgresql/data
+      - ./postgres/migrations:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_PASSWORD: postgrespassword
   hasura:

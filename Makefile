@@ -13,13 +13,11 @@ export:
 
 rebuild:
 	@$(DC) down
-	@$(DC) -f docker-compose.prod.yml down
 	@$(DC) build --no-cache
 	@$(DC) up -d
 
 reboot:
 	@$(DC) down
-	@$(DC) -f docker-compose.prod.yml down
 	@$(DC) build 
 	@$(DC) up -d
 

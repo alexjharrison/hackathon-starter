@@ -1,16 +1,18 @@
-import { Request, Response } from "express";
-var express = require("express");
-var bcrypt = require("bcrypt");
-var jwt = require("jsonwebtoken");
-var router = express.Router();
+import { Request, Response, Router } from "express";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+const router = Router();
+
+const tokenKey: string = process.env.TOKEN_KEY || "";
 
 //for testing
 //password is "password123"
 let users = [
   {
     id: 2,
-    first_name: "test",
-    last_name: "testytest",
+    first_name: "bob",
+    last_name: "woodward",
     email: "test1@example.com",
     encrypted_password:
       "$2b$10$KxGP2/Y.TxUJScVBXrF2q.19Ebi8HGg/Y00EkO/CjhkHyJqmRR29K",
@@ -28,23 +30,22 @@ router.post("/login", async (req: Request, res: Response) => {
     const user = users.find((u) => u.email == email);
 
     if (user && (await bcrypt.compare(password, user.encrypted_password))) {
-      // if (user && user.encrypted_password == password) {
       // Create token
       const token = jwt.sign(
         {
           "https://hasura.io/jwt/claims": {
-            "x-hasura-allowed-roles": ["editor", "user", "mod"],
+            "x-hasura-allowed-roles": ["user"],
             "x-hasura-default-role": "user",
             "x-hasura-user-id": user.id,
           },
         },
-        process.env.TOKEN_KEY,
+        tokenKey,
         { expiresIn: "2h" }
       );
       res.set({
         Authorization: `Bearer ${token}`,
       });
-      res.status(200).json(user);
+      res.status(200).json({ user, token });
     } else {
       res.status(400).send("Invalid Credentials");
     }
@@ -71,24 +72,32 @@ router.post("/register", async (req: Request, res: Response) => {
     //Encrypt user password
     let encrypted_password = await bcrypt.hash(password, 10);
     //create user
-    // ....
+    const id = Math.floor(Math.random() * 10000);
+    const newUser = {
+      id,
+      first_name,
+      last_name,
+      email,
+      encrypted_password,
+    };
+    users.push(newUser);
     //
     const token = jwt.sign(
       {
         "https://hasura.io/jwt/claims": {
-          "x-hasura-allowed-roles": ["editor", "user", "mod"],
+          "x-hasura-allowed-roles": ["user"],
           "x-hasura-default-role": "user",
-          "x-hasura-user-id": 2,
+          "x-hasura-user-id": id,
         },
       },
-      process.env.TOKEN_KEY,
+      tokenKey,
       { expiresIn: "2h" }
     );
     res.set({
       Authorization: `Bearer ${token}`,
     });
     // return new user and login
-    res.status(201).json({ first_name, last_name, email, encrypted_password });
+    res.status(201).json({ user: newUser, token });
   } catch (err) {
     console.log(err);
   }
