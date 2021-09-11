@@ -5,13 +5,15 @@ var jwt = require("jsonwebtoken");
 var router = express.Router();
 
 //for testing
+//password is "password123"
 let users = [
   {
-    id: 1,
-    email: "test@example.com",
-    password: "password123",
-    firstName: "test",
-    lastName: "testytest",
+    id: 2,
+    first_name: "test",
+    last_name: "testytest",
+    email: "test1@example.com",
+    encrypted_password:
+      "$2b$10$KxGP2/Y.TxUJScVBXrF2q.19Ebi8HGg/Y00EkO/CjhkHyJqmRR29K",
   },
 ];
 
@@ -25,8 +27,8 @@ router.post("/login", async (req: Request, res: Response) => {
     }
     const user = users.find((u) => u.email == email);
 
-    // if (user && (await bcrypt.compare(password, user.password))) {
-    if (user && user.password == password) {
+    if (user && (await bcrypt.compare(password, user.encrypted_password))) {
+      // if (user && user.encrypted_password == password) {
       // Create token
       const token = jwt.sign(
         {
@@ -39,7 +41,6 @@ router.post("/login", async (req: Request, res: Response) => {
         process.env.TOKEN_KEY,
         { expiresIn: "2h" }
       );
-      console.log(token);
       res.set({
         Authorization: `Bearer ${token}`,
       });
@@ -56,19 +57,19 @@ router.post("/register", async (req: Request, res: Response) => {
   // Our register logic starts here
   try {
     // Get user input
-    const { firstName, lastName, email, password } = req.body;
+    const { first_name, last_name, email, password } = req.body;
     // Validate user input
-    if (!(email && password && firstName && lastName)) {
+    if (!(email && password && first_name && last_name)) {
       res.status(400).send("All input is required");
     }
-    // check if user already exist
+    // check if user already exists
     // Validate if user exist in our database
     const oldUser = users.find((u) => u.email == email);
     if (oldUser) {
       return res.status(409).send("User Already Exists. Please Login");
     }
     //Encrypt user password
-    let encryptedPassword = await bcrypt.hash(password, 10);
+    let encrypted_password = await bcrypt.hash(password, 10);
     //create user
     // ....
     //
@@ -83,8 +84,11 @@ router.post("/register", async (req: Request, res: Response) => {
       process.env.TOKEN_KEY,
       { expiresIn: "2h" }
     );
-    // return new user
-    res.status(201).json(encryptedPassword);
+    res.set({
+      Authorization: `Bearer ${token}`,
+    });
+    // return new user and login
+    res.status(201).json({ first_name, last_name, email, encrypted_password });
   } catch (err) {
     console.log(err);
   }
