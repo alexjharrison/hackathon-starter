@@ -7,18 +7,6 @@ import { User } from "./types";
 const router = Router();
 
 const tokenKey: string = process.env.TOKEN_KEY || "";
-//for testing
-//password is "password123"
-// let users = [
-//   {
-//     id: 2,
-//     first_name: "bob",
-//     last_name: "woodward",
-//     email: "test1@example.com",
-//     encrypted_password:
-//       "$2b$10$KxGP2/Y.TxUJScVBXrF2q.19Ebi8HGg/Y00EkO/CjhkHyJqmRR29K",
-//   },
-// ];
 
 router.post("/login", async (req: Request, res: Response) => {
   // Our login logic starts here
@@ -69,7 +57,6 @@ router.post("/register", async (req: Request, res: Response) => {
     }
     // check if user already exists
     // Validate if user exist in our database
-    // const oldUser = users.find((u) => u.email == email);
     const oldUser: User = (
       await pg.query(`select * from users where email=$1`, [email])
     ).rows[0];
