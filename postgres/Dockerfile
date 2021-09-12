@@ -1,0 +1,4 @@
+# POSTGRES DOCKERFILE
+FROM postgres:12-alpine
+ADD "https://www.random.org/cgi-bin/randbyte?nbytes=10&format=h" skipcache
+COPY seed-data/hackathonstarter1.sql.gz /docker-entrypoint-initdb.d/

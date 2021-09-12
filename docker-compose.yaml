@@ -18,48 +18,52 @@ services:
       TOKEN_KEY: 123456
 
   postgres:
-    image: postgres:12
+    # image: postgres:12
     restart: always
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
     volumes:
-      - db_data:/var/lib/postgresql/data
+      # - db_data:/var/lib/postgresql/data
       # - ./postgres/migrations:/docker-entrypoint-initdb.d
-      - ./postgres/seed-data:/docker-entrypoint-initdb.d/
+      # - ./postgres/seed-data:/docker-entrypoint-initdb.d/
+      - ./postgres/data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: postgrespassword
       #exposed this port for local dev
     ports:
       - "5432:5432"
-  hasura:
-    image: hasura/graphql-engine:v2.0.9
-    ports:
-      - "8080:8080"
-    depends_on:
-      - "postgres"
-    restart: always
-    environment:
-      ## postgres database to store Hasura metadata
-      HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
-      ## this env var can be used to add the above postgres database to Hasura as a data source. this can be removed/updated based on your needs
-      PG_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
-      ## enable the console served by server
-      HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
-      ## enable debugging mode. It is recommended to disable this in production
-      HASURA_GRAPHQL_DEV_MODE: "true"
-      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
-      ## uncomment next line to set an admin secret
-      # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
-  vue:
-    build:
-      context: ./vue
-      dockerfile: Dockerfile
-    volumes:
-      - ./vue:/usr/src/app
-      - /usr/src/app/node_modules
-    ports:
-      - "3000:3000"
-    env_file:
-      - .env
-    depends_on:
-      - "hasura"
-volumes:
-  db_data:
+  # hasura:
+  #   image: hasura/graphql-engine:v2.0.9
+  #   ports:
+  #     - "8080:8080"
+  #   depends_on:
+  #     - "postgres"
+  #   restart: always
+  #   environment:
+  #     ## postgres database to store Hasura metadata
+  #     HASURA_GRAPHQL_METADATA_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
+  #     ## this env var can be used to add the above postgres database to Hasura as a data source. this can be removed/updated based on your needs
+  #     PG_DATABASE_URL: postgres://postgres:postgrespassword@postgres:5432/postgres
+  #     ## enable the console served by server
+  #     HASURA_GRAPHQL_ENABLE_CONSOLE: "true" # set to "false" to disable console
+  #     ## enable debugging mode. It is recommended to disable this in production
+  #     HASURA_GRAPHQL_DEV_MODE: "true"
+  #     HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+  #     ## uncomment next line to set an admin secret
+  #     # HASURA_GRAPHQL_ADMIN_SECRET: myadminsecretkey
+  # vue:
+  #   build:
+  #     context: ./vue
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./vue:/usr/src/app
+  #     - /usr/src/app/node_modules
+  #   ports:
+  #     - "3000:3000"
+  #   env_file:
+  #     - .env
+  #   depends_on:
+  #     - "hasura"
+# volumes:
+#   db_data:
