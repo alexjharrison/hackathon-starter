@@ -18,16 +18,15 @@ services:
       TOKEN_KEY: 123456
 
   postgres:
-    # image: postgres:12
-    build:
-      context: ./postgres
-      dockerfile: Dockerfile
+    image: postgres:12
     restart: always
     volumes:
       - db_data:/var/lib/postgresql/data
-      - ./postgres/migrations:/docker-entrypoint-initdb.d
+      # - ./postgres/migrations:/docker-entrypoint-initdb.d
+      - ./postgres/seed-data:/docker-entrypoint-initdb.d/
     environment:
       POSTGRES_PASSWORD: postgrespassword
+      #exposed this port for local dev
     ports:
       - "5432:5432"
   hasura:
