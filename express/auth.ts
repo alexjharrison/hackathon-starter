@@ -10,6 +10,8 @@ const router = Router();
 const tokenKey: string =
   "thisisareallylongkeyitneedstobeatleastthirtytwocharactersaccordingtohasura";
 
+const oneYear = () => Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 256;
+
 router.post("/login", async (req: Request, res: Response) => {
   // Our login logic starts here
   try {
@@ -35,7 +37,7 @@ router.post("/login", async (req: Request, res: Response) => {
           },
         },
         tokenKey,
-        { expiresIn: "2h" }
+        { expiresIn: oneYear() }
       );
       res.set({
         Authorization: `Bearer ${token}`,
@@ -86,7 +88,7 @@ router.post("/register", async (req: Request, res: Response) => {
         },
       },
       tokenKey,
-      { expiresIn: "2h" }
+      { expiresIn: oneYear() }
     );
     res.set({
       Authorization: `Bearer ${token}`,
