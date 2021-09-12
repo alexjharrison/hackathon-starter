@@ -6,7 +6,9 @@ import { User } from "./types";
 
 const router = Router();
 
-const tokenKey: string = process.env.TOKEN_KEY || "";
+// const tokenKey: string = process.env.TOKEN_KEY || "123456";
+const tokenKey: string =
+  "thisisareallylongkeyitneedstobeatleastthirtytwocharactersaccordingtohasura";
 
 router.post("/login", async (req: Request, res: Response) => {
   // Our login logic starts here
@@ -15,10 +17,11 @@ router.post("/login", async (req: Request, res: Response) => {
     const { email, password } = req.body;
     if (!(email && password)) {
       res.status(400).send("All input is required");
+      return;
     }
     // const user = users.find((u) => u.email == email);
     const user: User = (
-      await pg.query(`select * from users where email=$1`, [email])
+      await pg.query(`select * from auth.users where email=$1`, [email])
     ).rows[0];
 
     if (user && (await bcrypt.compare(password, user.encrypted_password))) {
@@ -28,7 +31,7 @@ router.post("/login", async (req: Request, res: Response) => {
           "https://hasura.io/jwt/claims": {
             "x-hasura-allowed-roles": ["user"],
             "x-hasura-default-role": "user",
-            "x-hasura-user-id": user.id,
+            "x-hasura-user-id": "" + user.id,
           },
         },
         tokenKey,
@@ -54,11 +57,12 @@ router.post("/register", async (req: Request, res: Response) => {
     // Validate user input
     if (!(email && password && first_name && last_name)) {
       res.status(400).send("All input is required");
+      return;
     }
     // check if user already exists
     // Validate if user exist in our database
     const oldUser: User = (
-      await pg.query(`select * from users where email=$1`, [email])
+      await pg.query(`select * from auth.users where email=$1`, [email])
     ).rows[0];
     if (oldUser) {
       return res.status(409).send("User Already Exists. Please Login");
@@ -69,7 +73,7 @@ router.post("/register", async (req: Request, res: Response) => {
     const id = Math.floor(Math.random() * 10000);
     const newUser: User = (
       await pg.query(
-        `insert into users (first_name, last_name, encrypted_password, email) VALUES ($1, $2, $3, $4) returning id, first_name, last_name, encrypted_password, email`,
+        `insert into auth.users (first_name, last_name, encrypted_password, email) VALUES ($1, $2, $3, $4) returning id, first_name, last_name, encrypted_password, email`,
         [first_name, last_name, encrypted_password, email]
       )
     ).rows[0];
@@ -78,7 +82,7 @@ router.post("/register", async (req: Request, res: Response) => {
         "https://hasura.io/jwt/claims": {
           "x-hasura-allowed-roles": ["user"],
           "x-hasura-default-role": "user",
-          "x-hasura-user-id": id,
+          "x-hasura-user-id": "" + id,
         },
       },
       tokenKey,
@@ -95,4 +99,4 @@ router.post("/register", async (req: Request, res: Response) => {
   // Our register logic ends here
 });
 
-module.exports = router;
+export default router;

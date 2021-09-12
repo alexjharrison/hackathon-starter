@@ -1,10 +1,8 @@
 import { Pool } from "pg";
 
-const pool = new Pool({
+export const pg = new Pool({
   host: "postgres",
-  database: "auth",
+  database: "postgres",
   user: "postgres",
   password: "postgrespassword",
 });
-
-export const pg = pool;
