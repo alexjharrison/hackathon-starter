@@ -18,7 +18,7 @@
     <a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
   </p>
 
-  <Button :label="`count is: ${count}`" @click="count++" />
+  <p-button :label="`count is: ${count}`" @click="count++" />
   <p>
     Edit
     <code>components/HelloWorld.vue</code> to test hot module replacement.
@@ -27,7 +27,6 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import Button from "primevue/button";
 
 defineProps<{ msg: string }>();
 

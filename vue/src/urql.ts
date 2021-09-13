@@ -18,7 +18,7 @@ const subscriptionClient = new SubscriptionClient("ws://localhost/v1/graphql", {
   }),
 });
 
-export const client = createClient({
+export const urqlOptions = createClient({
   url: "http://localhost/v1/graphql",
   fetchOptions: {
     headers: { accept: "application/json", authorization: "Bearer ?" },
