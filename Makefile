@@ -28,7 +28,7 @@ reboot:
 	@$(DC) down
 	@$(DC) -f docker-compose.prod.yml down
 	@$(DC) build 
-	@$(DC) up -d
+	@$(DC) up -d 
 
 rebuild-prod:
 	@$(DC) -f docker-compose.prod.yml down

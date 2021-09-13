@@ -8,9 +8,9 @@ rocktalk.xyz {
 }
 
 auth.rocktalk.xyz {
-    reverse_proxy localhost:8000
+    reverse_proxy express:8000
 }
 
 api.rocktalk.xyz {
-    reverse_proxy localhost:8080
+    reverse_proxy hasura:8080
 }
