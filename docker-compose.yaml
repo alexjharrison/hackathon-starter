@@ -63,13 +63,5 @@ services:
     depends_on:
       - "hasura"
 
-  # caddy:
-  #   image: caddy:2.4.5-alpine
-  #   restart: unless-stopped
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - ./Caddyfile:/etc/caddy/Caddyfile
 volumes:
   db_data:
