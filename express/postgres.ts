@@ -4,5 +4,5 @@ export const pg = new Pool({
   host: "postgres",
   database: "postgres",
   user: "postgres",
-  password: "postgrespassword",
+  password: process.env.PG_PASSWORD,
 });

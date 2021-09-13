@@ -1,3 +1,16 @@
-rocktalk.xyz
+rocktalk.xyz {
+    root * /srv
+    encode gzip
 
-reverse_proxy 127.0.0.1:3000
+    try_files {path} index.html
+
+    file_server
+}
+
+auth.rocktalk.xyz {
+    reverse_proxy express:8000
+}
+
+api.rocktalk.xyz {
+    reverse_proxy hasura:8080
+}

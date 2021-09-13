@@ -7,8 +7,7 @@ import { User } from "./types";
 const router = Router();
 
 // const tokenKey: string = process.env.TOKEN_KEY || "123456";
-const tokenKey: string =
-  "thisisareallylongkeyitneedstobeatleastthirtytwocharactersaccordingtohasura";
+const tokenKey: string = process.env.TOKEN_KEY || "";
 
 const oneYear = () => Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 256;
 

@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@types/node": "^16.9.1",
+    "@types/ws": "^7.4.7",
     "@vitejs/plugin-vue": "1.6.2",
     "@vue/compiler-sfc": "^3.2.6",
     "sass": "^1.39.2",

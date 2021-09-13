@@ -32,6 +32,7 @@ export const urqlOptions = createClient({
       getAuth: async ({ authState, mutate }) => authState,
     }),
     subscriptionExchange({
+      // @ts-ignore
       forwardSubscription: (operation) => subscriptionClient.request(operation),
     }),
   ],
