@@ -1,0 +1,36 @@
+actions:
+- name: login
+  definition:
+    kind: synchronous
+    handler: http://express:8000/auth/login
+- name: register
+  definition:
+    kind: synchronous
+    handler: http://express:8000/auth/register
+custom_types:
+  enums: []
+  input_objects:
+  - name: LoginArgs
+  - name: RegisterArgs
+  objects:
+  - name: LoginResult
+    relationships:
+    - remote_table:
+        schema: auth
+        name: users
+      name: user
+      source: default
+      type: object
+      field_mapping:
+        id: id
+  - name: RegisterResult
+    relationships:
+    - remote_table:
+        schema: auth
+        name: users
+      name: user
+      source: default
+      type: object
+      field_mapping:
+        id: id
+  scalars: []

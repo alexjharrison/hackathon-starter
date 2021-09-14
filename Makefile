@@ -8,7 +8,7 @@ migration:
 
 export:
 	@$(HCLI) metadata export
-	@$(DC) exec app npm run introspect
+	# @$(DC) exec app npm run introspect
 	# sudo chown -R `id -u`:`id -g` ./hasura ./app
 
 db-reset:
