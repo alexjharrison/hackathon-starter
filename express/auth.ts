@@ -14,8 +14,8 @@ const oneYear = () => Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 256;
 router.post("/login", async (req: Request, res: Response) => {
   // Our login logic starts here
   try {
+    const { email, password } = req.body.input.args;
     // Get user input
-    const { email, password } = req.body;
     if (!(email && password)) {
       res.status(400).send("All input is required");
       return;
@@ -38,10 +38,7 @@ router.post("/login", async (req: Request, res: Response) => {
         tokenKey,
         { expiresIn: oneYear() }
       );
-      res.set({
-        Authorization: `Bearer ${token}`,
-      });
-      res.status(200).json({ user, token });
+      res.status(200).json({ id: user.id, token });
     } else {
       res.status(400).send("Invalid Credentials");
     }
@@ -54,7 +51,7 @@ router.post("/register", async (req: Request, res: Response) => {
   // Our register logic starts here
   try {
     // Get user input
-    const { first_name, last_name, email, password } = req.body;
+    const { first_name, last_name, email, password } = req.body.input.args;
     // Validate user input
     if (!(email && password && first_name && last_name)) {
       res.status(400).send("All input is required");
@@ -89,11 +86,8 @@ router.post("/register", async (req: Request, res: Response) => {
       tokenKey,
       { expiresIn: oneYear() }
     );
-    res.set({
-      Authorization: `Bearer ${token}`,
-    });
     // return new user and login
-    res.status(201).json({ user: newUser, token });
+    res.status(201).json({ id: newUser.id, token });
   } catch (err) {
     console.log(err);
   }
