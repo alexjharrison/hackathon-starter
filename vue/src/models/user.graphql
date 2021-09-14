@@ -1,10 +1,12 @@
-fragment UserFields on User {
+fragment UserFields on auth_users {
   id
-  name
+  first_name
+  last_name
+  email
 }
 
 query User {
-  user {
+  auth_users {
     ...UserFields
   }
 }
