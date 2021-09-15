@@ -8,8 +8,8 @@ migration:
 
 export:
 	@$(HCLI) metadata export
-	# @$(DC) exec app npm run introspect
-	# sudo chown -R `id -u`:`id -g` ./hasura ./app
+	@$(DC) exec vue npm run generate
+	# sudo chown -R `id -u`:`id -g` ./hasura
 
 db-reset:
 	@$(DC) down

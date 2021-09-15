@@ -2,6 +2,7 @@ import {
   cacheExchange,
   createClient,
   dedupExchange,
+  fetchExchange,
   subscriptionExchange,
 } from "@urql/core";
 import { authExchange } from "@urql/exchange-auth";
@@ -29,8 +30,15 @@ export const urqlOptions = createClient({
     cacheExchange,
     authExchange({
       addAuthToOperation: ({ authState, operation }) => operation,
-      getAuth: async ({ authState, mutate }) => authState,
+      getAuth: async ({ authState, mutate }) => {
+        if (authState) return authState;
+
+        const token = localStorage.getItem("token");
+        if (token) return token;
+      },
+      // didAuthError,
     }),
+    fetchExchange,
     subscriptionExchange({
       // @ts-ignore
       forwardSubscription: (operation) => subscriptionClient.request(operation),

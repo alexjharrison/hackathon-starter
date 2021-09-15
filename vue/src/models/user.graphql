@@ -10,3 +10,13 @@ query User {
     ...UserFields
   }
 }
+
+query AllUsers {
+  auth_users {
+    email
+    encrypted_password
+    first_name
+    id
+    last_name
+  }
+}
