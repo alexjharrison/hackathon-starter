@@ -1,3 +1,12 @@
 table:
   name: users
   schema: auth
+select_permissions:
+- permission:
+    columns:
+    - email
+    - first_name
+    - id
+    - last_name
+    filter: {}
+  role: user

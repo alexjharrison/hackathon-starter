@@ -10,6 +10,7 @@
               type="text"
               id="first_name"
               v-model="formValues.first_name"
+              required
             />
             <label for="first_name">First Name</label>
           </span>
@@ -18,11 +19,17 @@
               type="text"
               id="last_name"
               v-model="formValues.last_name"
+              required
             />
             <label for="last_name">Last Name</label>
           </span>
           <span class="p-float-label mb-4">
-            <input-text type="text" id="email" v-model="formValues.email" />
+            <input-text
+              type="text"
+              id="email"
+              v-model="formValues.email"
+              required
+            />
             <label for="email">Email</label>
           </span>
           <span class="p-float-label" input-class="w-full">

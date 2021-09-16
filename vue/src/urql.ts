@@ -5,8 +5,9 @@ import {
   fetchExchange,
   subscriptionExchange,
 } from "@urql/core";
-import { authExchange } from "@urql/exchange-auth";
+import { devtoolsExchange } from "@urql/devtools";
 import { SubscriptionClient } from "subscriptions-transport-ws";
+import { token } from "./hooks/auth";
 
 const subscriptionClient = new SubscriptionClient(
   "ws://localhost:8080/v1/graphql",
@@ -16,6 +17,7 @@ const subscriptionClient = new SubscriptionClient(
     connectionParams: () => ({
       headers: {
         "content-type": "application/json",
+        ...(token.value && { authorization: `Bearer ${token.value}` }),
       },
     }),
   }
@@ -23,23 +25,17 @@ const subscriptionClient = new SubscriptionClient(
 
 export const urqlOptions = createClient({
   url: "http://localhost:8080/v1/graphql",
-  fetchOptions: {
-    headers: { accept: "application/json" },
-  },
+  fetchOptions: () => ({
+    headers: {
+      "content-type": "application/json",
+      ...(token.value && { authorization: `Bearer ${token.value}` }),
+    },
+  }),
   requestPolicy: "cache-and-network",
   exchanges: [
+    devtoolsExchange,
     dedupExchange,
     cacheExchange,
-    authExchange({
-      addAuthToOperation: ({ authState, operation }) => operation,
-      getAuth: async ({ authState, mutate }) => {
-        if (authState) return authState;
-
-        const token = localStorage.getItem("token");
-        if (token) return token;
-      },
-      // didAuthError,
-    }),
     fetchExchange,
     subscriptionExchange({
       // @ts-ignore

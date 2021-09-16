@@ -6,11 +6,20 @@
       <template #content>
         <div class="text-left p-fluid p-grid p-formgrid">
           <span class="p-float-label mb-4">
-            <input-text type="text" id="email" v-model="formValues.email" />
+            <input-text
+              type="text"
+              id="email"
+              v-model="formValues.email"
+              required
+            />
             <label for="email">Email</label>
           </span>
           <span class="p-float-label" input-class="w-full">
-            <input-text type="password" v-model="formValues.password" />
+            <input-text
+              type="password"
+              v-model="formValues.password"
+              required
+            />
             <label for="password">Password</label>
           </span>
         </div>

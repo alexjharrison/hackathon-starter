@@ -1,14 +1,22 @@
-import { ref, readonly, reactive } from "vue";
+import { ref, readonly, reactive, computed, watch } from "vue";
 import { useToast } from "primevue/usetoast";
 import { useRouter } from "vue-router";
-import { useLoginMutation, useRegisterMutation } from "../api";
+import { useLoginMutation, useRegisterMutation, useUsersQuery } from "../api";
+import { idFromToken } from "../utils/jwt";
+
+export const token = ref(localStorage.getItem("token"));
 
 export const useAuth = () => {
-  const token = ref(localStorage.getItem("token"));
   const toaster = useToast();
   const router = useRouter();
+
   const { executeMutation: executeLogin } = useLoginMutation();
   const { executeMutation: executeRegister } = useRegisterMutation();
+  const { data: userQuery, error: userQueryError } = useUsersQuery({
+    variables: computed(() => ({
+      where: { id: { _eq: token.value ? idFromToken(token.value) : -1 } },
+    })),
+  });
 
   const formValues = reactive({
     first_name: "",
@@ -18,13 +26,23 @@ export const useAuth = () => {
   });
 
   const isSubmitting = ref(false);
+  const isLoggedIn = computed(() => Boolean(token.value));
 
-  function logout() {
+  const user = computed(() => userQuery.value?.auth_users[0]);
+
+  watch(userQueryError, (error) => {
+    if (token.value && error) {
+      logout("Expired Session. Logging Out.");
+    }
+  });
+
+  function logout(summary = "Successfully logged out") {
     token.value = null;
+    localStorage.removeItem("token");
     toaster.add({
       severity: "success",
-      summary: "Successfully logged out",
-      life: 3000,
+      summary,
+      life: 5000,
     });
     router.push({ name: "Home" });
   }
@@ -42,7 +60,7 @@ export const useAuth = () => {
       toaster.add({
         summary: "Successfully logged in",
         severity: "success",
-        life: 3000,
+        life: 5000,
       });
 
       localStorage.setItem("token", data.login.token);
@@ -53,7 +71,7 @@ export const useAuth = () => {
         summary: error.message,
         detail: JSON.stringify(error.graphQLErrors),
         severity: "warn",
-        life: 3000,
+        life: 5000,
       });
     }
   }
@@ -82,6 +100,8 @@ export const useAuth = () => {
     token: readonly(token),
     formValues,
     isSubmitting,
+    isLoggedIn,
+    user,
     logout,
     login,
     register,

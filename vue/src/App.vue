@@ -1,7 +1,9 @@
 <template>
   <toast />
   <app-header />
-  <router-view />
+  <main class="p-4 m-auto">
+    <router-view />
+  </main>
 </template>
 
 <script setup lang="ts">
@@ -20,7 +22,10 @@ body {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+}
+
+main {
+  max-width: 1440px;
 }
 
 a {
