@@ -8,21 +8,23 @@ import {
 import { authExchange } from "@urql/exchange-auth";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 
-const subscriptionClient = new SubscriptionClient("ws://localhost/v1/graphql", {
-  reconnect: true,
-  lazy: true,
-  connectionParams: () => ({
-    headers: {
-      "content-type": "application/json",
-      authorization: `Bearer ?`,
-    },
-  }),
-});
+const subscriptionClient = new SubscriptionClient(
+  "ws://localhost:8080/v1/graphql",
+  {
+    reconnect: true,
+    lazy: true,
+    connectionParams: () => ({
+      headers: {
+        "content-type": "application/json",
+      },
+    }),
+  }
+);
 
 export const urqlOptions = createClient({
-  url: "http://localhost/v1/graphql",
+  url: "http://localhost:8080/v1/graphql",
   fetchOptions: {
-    headers: { accept: "application/json", authorization: "Bearer ?" },
+    headers: { accept: "application/json" },
   },
   requestPolicy: "cache-and-network",
   exchanges: [

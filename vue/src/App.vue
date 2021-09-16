@@ -1,13 +1,11 @@
 <template>
+  <toast />
   <app-header />
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <router-view />
 </template>
 
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from "@/components/HelloWorld.vue";
+import Toast from "primevue/toast";
 import AppHeader from "@/components/AppHeader.vue";
 </script>
 
@@ -23,5 +21,13 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+}
+
+a {
+  text-decoration: none;
+}
+
+.p-card {
+  background-color: var(--surface-c);
 }
 </style>

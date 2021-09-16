@@ -3,6 +3,7 @@
 declare module "vue" {
   export interface GlobalComponents {
     "p-button": typeof import("primevue/button")["default"];
+    divider: typeof import("primevue/divider")["default"];
   }
 }
 

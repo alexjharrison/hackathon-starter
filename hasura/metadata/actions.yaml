@@ -3,10 +3,16 @@ actions:
   definition:
     kind: synchronous
     handler: http://express:8000/auth/login
+  permissions:
+  - role: public
+  - role: user
 - name: register
   definition:
     kind: synchronous
     handler: http://express:8000/auth/register
+  permissions:
+  - role: user
+  - role: public
 custom_types:
   enums: []
   input_objects:

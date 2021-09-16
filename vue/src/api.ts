@@ -459,14 +459,14 @@ export type LoginMutationVariables = Exact<{
 }>;
 
 
-export type LoginMutation = { __typename?: 'mutation_root', login?: Maybe<{ __typename?: 'LoginResult', token: string, user: { __typename?: 'auth_users', email: string, first_name: string, id: number, last_name: string } }> };
+export type LoginMutation = { __typename?: 'mutation_root', login?: Maybe<{ __typename?: 'LoginResult', token: string }> };
 
 export type RegisterMutationVariables = Exact<{
   args: RegisterArgs;
 }>;
 
 
-export type RegisterMutation = { __typename?: 'mutation_root', register?: Maybe<{ __typename?: 'RegisterResult', token: string, user: { __typename?: 'auth_users', email: string, first_name: string, id: number, last_name: string } }> };
+export type RegisterMutation = { __typename?: 'mutation_root', register?: Maybe<{ __typename?: 'RegisterResult', token: string }> };
 
 export type UserFieldsFragment = { __typename?: 'auth_users', id: number, first_name: string, last_name: string, email: string };
 
@@ -492,12 +492,6 @@ export const LoginDocument = gql`
     mutation Login($args: LoginArgs!) {
   login(args: $args) {
     token
-    user {
-      email
-      first_name
-      id
-      last_name
-    }
   }
 }
     `;
@@ -509,12 +503,6 @@ export const RegisterDocument = gql`
     mutation Register($args: RegisterArgs!) {
   register(args: $args) {
     token
-    user {
-      email
-      first_name
-      id
-      last_name
-    }
   }
 }
     `;
