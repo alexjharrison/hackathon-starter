@@ -2,14 +2,14 @@ actions:
 - name: login
   definition:
     kind: synchronous
-    handler: http://express:8000/auth/login
+    handler: http://express:8000/webhook
   permissions:
   - role: public
   - role: user
 - name: register
   definition:
     kind: synchronous
-    handler: http://express:8000/auth/register
+    handler: http://express:8000/webhook
   permissions:
   - role: user
   - role: public
@@ -20,23 +20,5 @@ custom_types:
   - name: RegisterArgs
   objects:
   - name: LoginResult
-    relationships:
-    - remote_table:
-        schema: auth
-        name: users
-      name: user
-      source: default
-      type: object
-      field_mapping:
-        id: id
   - name: RegisterResult
-    relationships:
-    - remote_table:
-        schema: auth
-        name: users
-      name: user
-      source: default
-      type: object
-      field_mapping:
-        id: id
   scalars: []

@@ -23,12 +23,10 @@ input RegisterArgs {
 }
 
 type LoginResult {
-  id: String!
   token: String!
 }
 
 type RegisterResult {
-  id: String!
   token: String!
 }
 

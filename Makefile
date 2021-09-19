@@ -9,6 +9,7 @@ migration:
 export:
 	@$(HCLI) metadata export
 	@$(DC) exec vue npm run generate
+	mv vue/api.ts express/src/api.ts
 	# sudo chown -R `id -u`:`id -g` ./hasura
 
 db-reset:

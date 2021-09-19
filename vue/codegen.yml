@@ -6,6 +6,12 @@ schema:
 
 documents: src/**/*.graphql
 generates:
+  api.ts:
+    config:
+      transformUnderscore: true
+    plugins:
+      - typescript
+      - typescript-operations
   src/api.ts:
     config:
       gqlImport: "@urql/vue#gql"

@@ -1,11 +1,12 @@
 import express from "express";
-import auth from "./auth";
+import { webhookRoutes } from "./webhooks";
 const app = express();
 const PORT = 8000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/auth", auth);
+
+app.use("/webhook", webhookRoutes);
 app.get("/", (req, res) => res.send("Express + TypeScript Server"));
 
 app.listen(PORT, () => {
