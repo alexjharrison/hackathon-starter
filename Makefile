@@ -3,7 +3,7 @@ HCLI=$(DC) exec hasura hasura-cli
 
 
 migration: 
-	@$(HCLI) migrate create init --from-server
+	@$(HCLI) migrate create files --from-server
 	sudo chown -R `id -u`:`id -g` ./hasura
 
 export:
