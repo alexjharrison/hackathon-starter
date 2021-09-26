@@ -7,6 +7,7 @@ services:
     volumes:
       - ./express:/usr/src/app
       - /usr/src/app/node_modules
+      - file_uploads:/usr/src/app/static
     ports:
       - 8000:8000
     depends_on:
@@ -74,3 +75,5 @@ services:
 
 volumes:
   db_data:
+  file_uploads:
+    external: true

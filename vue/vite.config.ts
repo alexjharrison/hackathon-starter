@@ -15,11 +15,9 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },
-      "^/socket/.*": {
-        target: "ws://hasura:8080",
+      "^/files/.*": {
+        target: "http://express:8000",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/socket/, ""),
-        ws: true,
       },
     },
   },
