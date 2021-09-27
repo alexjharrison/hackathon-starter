@@ -3,6 +3,7 @@ import multer from "multer";
 import { v4 } from "uuid";
 import { File } from "../api";
 import { pg } from "../config/postgres";
+import { jwtMiddleware } from "../services/jwt";
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -37,11 +38,24 @@ const upload = multer({
 const router = Router();
 
 // return file by uuid key
-router.get("/:key", (req, res) => {});
+router.get("/:key", async (req, res) => {
+  const data = await pg.query<File>(`select * from public.file where id=$1`, [
+    req.params.key,
+  ]);
+  const file = data.rows[0];
+  if (!file) {
+    // send 404
+  }
+  console.log(file);
+  res.sendFile(`/usr/src/app/static/${file.filename}`, {}, (err) => {
+    console.log(err);
+    res.json(err);
+  });
+});
 
 // save file to /static folder
 // save metadata to db
-router.post("/", (req, res) => {
+router.post("/", jwtMiddleware, (req, res) => {
   upload(req, res, (err) => {
     if (err) {
       res.status(400).json({ message: "wtf mate" });
