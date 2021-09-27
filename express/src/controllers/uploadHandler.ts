@@ -44,13 +44,10 @@ router.get("/:key", async (req, res) => {
   ]);
   const file = data.rows[0];
   if (!file) {
-    // send 404
+    res.status(404).send();
+    return;
   }
-  console.log(file);
-  res.sendFile(`/usr/src/app/static/${file.filename}`, {}, (err) => {
-    console.log(err);
-    res.json(err);
-  });
+  res.download(`/usr/src/app/static/${file.filename}`, file.filename);
 });
 
 // save file to /static folder
