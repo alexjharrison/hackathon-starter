@@ -306,8 +306,8 @@ export type Auth_Users_Variance_Fields = {
 export type File = {
   __typename?: 'file';
   created_at: Scalars['timestamptz'];
-  extension: Scalars['String'];
   filename: Scalars['String'];
+  filesize: Scalars['Int'];
   id: Scalars['uuid'];
   mimetype: Scalars['String'];
   updated_at: Scalars['timestamptz'];
@@ -349,6 +349,7 @@ export type File_Aggregate_FieldsCountArgs = {
 /** aggregate avg on columns */
 export type File_Avg_Fields = {
   __typename?: 'file_avg_fields';
+  filesize?: Maybe<Scalars['Float']>;
   uploaded_by?: Maybe<Scalars['Float']>;
 };
 
@@ -358,8 +359,8 @@ export type File_Bool_Exp = {
   _not?: Maybe<File_Bool_Exp>;
   _or?: Maybe<Array<File_Bool_Exp>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
-  extension?: Maybe<String_Comparison_Exp>;
   filename?: Maybe<String_Comparison_Exp>;
+  filesize?: Maybe<Int_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   mimetype?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
@@ -375,14 +376,15 @@ export enum File_Constraint {
 
 /** input type for incrementing numeric columns in table "file" */
 export type File_Inc_Input = {
+  filesize?: Maybe<Scalars['Int']>;
   uploaded_by?: Maybe<Scalars['Int']>;
 };
 
 /** input type for inserting data into table "file" */
 export type File_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
-  extension?: Maybe<Scalars['String']>;
   filename?: Maybe<Scalars['String']>;
+  filesize?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['uuid']>;
   mimetype?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -394,8 +396,8 @@ export type File_Insert_Input = {
 export type File_Max_Fields = {
   __typename?: 'file_max_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
-  extension?: Maybe<Scalars['String']>;
   filename?: Maybe<Scalars['String']>;
+  filesize?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['uuid']>;
   mimetype?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -406,8 +408,8 @@ export type File_Max_Fields = {
 export type File_Min_Fields = {
   __typename?: 'file_min_fields';
   created_at?: Maybe<Scalars['timestamptz']>;
-  extension?: Maybe<Scalars['String']>;
   filename?: Maybe<Scalars['String']>;
+  filesize?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['uuid']>;
   mimetype?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -433,8 +435,8 @@ export type File_On_Conflict = {
 /** Ordering options when selecting data from "file". */
 export type File_Order_By = {
   created_at?: Maybe<Order_By>;
-  extension?: Maybe<Order_By>;
   filename?: Maybe<Order_By>;
+  filesize?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   mimetype?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
@@ -452,9 +454,9 @@ export enum File_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
-  Extension = 'extension',
-  /** column name */
   Filename = 'filename',
+  /** column name */
+  Filesize = 'filesize',
   /** column name */
   Id = 'id',
   /** column name */
@@ -468,8 +470,8 @@ export enum File_Select_Column {
 /** input type for updating data in table "file" */
 export type File_Set_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
-  extension?: Maybe<Scalars['String']>;
   filename?: Maybe<Scalars['String']>;
+  filesize?: Maybe<Scalars['Int']>;
   id?: Maybe<Scalars['uuid']>;
   mimetype?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
@@ -479,24 +481,28 @@ export type File_Set_Input = {
 /** aggregate stddev on columns */
 export type File_Stddev_Fields = {
   __typename?: 'file_stddev_fields';
+  filesize?: Maybe<Scalars['Float']>;
   uploaded_by?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate stddev_pop on columns */
 export type File_Stddev_Pop_Fields = {
   __typename?: 'file_stddev_pop_fields';
+  filesize?: Maybe<Scalars['Float']>;
   uploaded_by?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate stddev_samp on columns */
 export type File_Stddev_Samp_Fields = {
   __typename?: 'file_stddev_samp_fields';
+  filesize?: Maybe<Scalars['Float']>;
   uploaded_by?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate sum on columns */
 export type File_Sum_Fields = {
   __typename?: 'file_sum_fields';
+  filesize?: Maybe<Scalars['Int']>;
   uploaded_by?: Maybe<Scalars['Int']>;
 };
 
@@ -505,9 +511,9 @@ export enum File_Update_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
-  Extension = 'extension',
-  /** column name */
   Filename = 'filename',
+  /** column name */
+  Filesize = 'filesize',
   /** column name */
   Id = 'id',
   /** column name */
@@ -521,18 +527,21 @@ export enum File_Update_Column {
 /** aggregate var_pop on columns */
 export type File_Var_Pop_Fields = {
   __typename?: 'file_var_pop_fields';
+  filesize?: Maybe<Scalars['Float']>;
   uploaded_by?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate var_samp on columns */
 export type File_Var_Samp_Fields = {
   __typename?: 'file_var_samp_fields';
+  filesize?: Maybe<Scalars['Float']>;
   uploaded_by?: Maybe<Scalars['Float']>;
 };
 
 /** aggregate variance on columns */
 export type File_Variance_Fields = {
   __typename?: 'file_variance_fields';
+  filesize?: Maybe<Scalars['Float']>;
   uploaded_by?: Maybe<Scalars['Float']>;
 };
 

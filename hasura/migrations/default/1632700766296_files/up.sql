@@ -15,9 +15,9 @@ CREATE TABLE public.file (
     created_at timestamp with time zone DEFAULT now() NOT NULL,
     updated_at timestamp with time zone DEFAULT now() NOT NULL,
     filename text NOT NULL,
-    extension text NOT NULL,
     mimetype text NOT NULL,
-    uploaded_by integer NOT NULL
+    uploaded_by integer NOT NULL,
+    filesize integer NOT NULL
 );
 ALTER TABLE ONLY public.file
     ADD CONSTRAINT file_pkey PRIMARY KEY (id);

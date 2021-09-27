@@ -11,26 +11,3 @@ object_relationships:
       remote_table:
         name: users
         schema: auth
-select_permissions:
-- permission:
-    columns:
-    - uploaded_by
-    - extension
-    - filename
-    - mimetype
-    - created_at
-    - updated_at
-    - id
-    filter: {}
-  role: public
-- permission:
-    columns:
-    - id
-    - created_at
-    - updated_at
-    - filename
-    - extension
-    - mimetype
-    - uploaded_by
-    filter: {}
-  role: user
