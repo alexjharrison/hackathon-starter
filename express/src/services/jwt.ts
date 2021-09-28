@@ -1,6 +1,9 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Auth_Users } from "../api";
+import { RequestHandler } from "express";
+import { decode } from "jsonwebtoken";
+import { userByID } from "./users";
 
 // Defaults to one year
 export const jwtExpiration = () =>
@@ -28,3 +31,30 @@ export const verifyPassword = async (
   password: string,
   user: Auth_Users
 ): Promise<boolean> => bcrypt.compare(password, user.encrypted_password);
+
+interface JWTContent {
+  "https://hasura.io/jwt/claims": {
+    "x-hasura-allowed-roles": string[];
+    "x-hasura-default-role": string;
+    "x-hasura-user-id": string;
+  };
+}
+
+export const jwtMiddleware: RequestHandler = async (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (token) {
+    req.token = token;
+    const values = decode(token) as JWTContent;
+    const user = await userByID(
+      values["https://hasura.io/jwt/claims"]["x-hasura-user-id"]
+    );
+    if (!user) {
+      res.status(401).send({ message: "unauthorized" });
+      return;
+    } else req.user = user;
+  } else {
+    res.status(401).send({ message: "unauthorized" });
+    return;
+  }
+  next();
+};

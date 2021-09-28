@@ -3,7 +3,7 @@ HCLI=$(DC) exec hasura hasura-cli
 
 
 migration: 
-	@$(HCLI) migrate create init --from-server
+	@$(HCLI) migrate create files --from-server
 	sudo chown -R `id -u`:`id -g` ./hasura
 
 export:
@@ -21,7 +21,6 @@ db-reset:
 rebuild:
 	@$(DC) down
 	@$(DC) -f docker-compose.prod.yml down
-	docker volume rm hackathon-starter_db_data
 	@$(DC) build --no-cache
 	@$(DC) up -d
 
@@ -35,6 +34,7 @@ rebuild-prod:
 	@$(DC) -f docker-compose.prod.yml down
 	@$(DC) down
 	docker volume create --name=caddy_data
+	docker volume create --name=file_uploads
 	@$(DC) -f docker-compose.prod.yml build --no-cache
 	@$(DC) -f docker-compose.prod.yml up -d
 

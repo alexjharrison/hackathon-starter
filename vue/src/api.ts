@@ -12,6 +12,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  timestamptz: any;
+  uuid: any;
 };
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
@@ -193,6 +195,13 @@ export type Auth_Users_Mutation_Response = {
   returning: Array<Auth_Users>;
 };
 
+/** input type for inserting object relation for remote table "auth.users" */
+export type Auth_Users_Obj_Rel_Insert_Input = {
+  data: Auth_Users_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Auth_Users_On_Conflict>;
+};
+
 /** on conflict condition type for table "auth.users" */
 export type Auth_Users_On_Conflict = {
   constraint: Auth_Users_Constraint;
@@ -293,6 +302,249 @@ export type Auth_Users_Variance_Fields = {
   id?: Maybe<Scalars['Float']>;
 };
 
+/** columns and relationships of "file" */
+export type File = {
+  __typename?: 'file';
+  created_at: Scalars['timestamptz'];
+  filename: Scalars['String'];
+  filesize: Scalars['Int'];
+  id: Scalars['uuid'];
+  mimetype: Scalars['String'];
+  updated_at: Scalars['timestamptz'];
+  uploaded_by: Scalars['Int'];
+  /** An object relationship */
+  user?: Maybe<Auth_Users>;
+};
+
+/** aggregated selection of "file" */
+export type File_Aggregate = {
+  __typename?: 'file_aggregate';
+  aggregate?: Maybe<File_Aggregate_Fields>;
+  nodes: Array<File>;
+};
+
+/** aggregate fields of "file" */
+export type File_Aggregate_Fields = {
+  __typename?: 'file_aggregate_fields';
+  avg?: Maybe<File_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<File_Max_Fields>;
+  min?: Maybe<File_Min_Fields>;
+  stddev?: Maybe<File_Stddev_Fields>;
+  stddev_pop?: Maybe<File_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<File_Stddev_Samp_Fields>;
+  sum?: Maybe<File_Sum_Fields>;
+  var_pop?: Maybe<File_Var_Pop_Fields>;
+  var_samp?: Maybe<File_Var_Samp_Fields>;
+  variance?: Maybe<File_Variance_Fields>;
+};
+
+
+/** aggregate fields of "file" */
+export type File_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<File_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** aggregate avg on columns */
+export type File_Avg_Fields = {
+  __typename?: 'file_avg_fields';
+  filesize?: Maybe<Scalars['Float']>;
+  uploaded_by?: Maybe<Scalars['Float']>;
+};
+
+/** Boolean expression to filter rows from the table "file". All fields are combined with a logical 'AND'. */
+export type File_Bool_Exp = {
+  _and?: Maybe<Array<File_Bool_Exp>>;
+  _not?: Maybe<File_Bool_Exp>;
+  _or?: Maybe<Array<File_Bool_Exp>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  filename?: Maybe<String_Comparison_Exp>;
+  filesize?: Maybe<Int_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  mimetype?: Maybe<String_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  uploaded_by?: Maybe<Int_Comparison_Exp>;
+  user?: Maybe<Auth_Users_Bool_Exp>;
+};
+
+/** unique or primary key constraints on table "file" */
+export enum File_Constraint {
+  /** unique or primary key constraint */
+  FilePkey = 'file_pkey'
+}
+
+/** input type for incrementing numeric columns in table "file" */
+export type File_Inc_Input = {
+  filesize?: Maybe<Scalars['Int']>;
+  uploaded_by?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "file" */
+export type File_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  filename?: Maybe<Scalars['String']>;
+  filesize?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['uuid']>;
+  mimetype?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  uploaded_by?: Maybe<Scalars['Int']>;
+  user?: Maybe<Auth_Users_Obj_Rel_Insert_Input>;
+};
+
+/** aggregate max on columns */
+export type File_Max_Fields = {
+  __typename?: 'file_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  filename?: Maybe<Scalars['String']>;
+  filesize?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['uuid']>;
+  mimetype?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  uploaded_by?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate min on columns */
+export type File_Min_Fields = {
+  __typename?: 'file_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  filename?: Maybe<Scalars['String']>;
+  filesize?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['uuid']>;
+  mimetype?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  uploaded_by?: Maybe<Scalars['Int']>;
+};
+
+/** response of any mutation on the table "file" */
+export type File_Mutation_Response = {
+  __typename?: 'file_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<File>;
+};
+
+/** on conflict condition type for table "file" */
+export type File_On_Conflict = {
+  constraint: File_Constraint;
+  update_columns?: Array<File_Update_Column>;
+  where?: Maybe<File_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "file". */
+export type File_Order_By = {
+  created_at?: Maybe<Order_By>;
+  filename?: Maybe<Order_By>;
+  filesize?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  mimetype?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  uploaded_by?: Maybe<Order_By>;
+  user?: Maybe<Auth_Users_Order_By>;
+};
+
+/** primary key columns input for table: file */
+export type File_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "file" */
+export enum File_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Filename = 'filename',
+  /** column name */
+  Filesize = 'filesize',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Mimetype = 'mimetype',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UploadedBy = 'uploaded_by'
+}
+
+/** input type for updating data in table "file" */
+export type File_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  filename?: Maybe<Scalars['String']>;
+  filesize?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['uuid']>;
+  mimetype?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  uploaded_by?: Maybe<Scalars['Int']>;
+};
+
+/** aggregate stddev on columns */
+export type File_Stddev_Fields = {
+  __typename?: 'file_stddev_fields';
+  filesize?: Maybe<Scalars['Float']>;
+  uploaded_by?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_pop on columns */
+export type File_Stddev_Pop_Fields = {
+  __typename?: 'file_stddev_pop_fields';
+  filesize?: Maybe<Scalars['Float']>;
+  uploaded_by?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate stddev_samp on columns */
+export type File_Stddev_Samp_Fields = {
+  __typename?: 'file_stddev_samp_fields';
+  filesize?: Maybe<Scalars['Float']>;
+  uploaded_by?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate sum on columns */
+export type File_Sum_Fields = {
+  __typename?: 'file_sum_fields';
+  filesize?: Maybe<Scalars['Int']>;
+  uploaded_by?: Maybe<Scalars['Int']>;
+};
+
+/** update columns of table "file" */
+export enum File_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Filename = 'filename',
+  /** column name */
+  Filesize = 'filesize',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Mimetype = 'mimetype',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UploadedBy = 'uploaded_by'
+}
+
+/** aggregate var_pop on columns */
+export type File_Var_Pop_Fields = {
+  __typename?: 'file_var_pop_fields';
+  filesize?: Maybe<Scalars['Float']>;
+  uploaded_by?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate var_samp on columns */
+export type File_Var_Samp_Fields = {
+  __typename?: 'file_var_samp_fields';
+  filesize?: Maybe<Scalars['Float']>;
+  uploaded_by?: Maybe<Scalars['Float']>;
+};
+
+/** aggregate variance on columns */
+export type File_Variance_Fields = {
+  __typename?: 'file_variance_fields';
+  filesize?: Maybe<Scalars['Float']>;
+  uploaded_by?: Maybe<Scalars['Float']>;
+};
+
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
@@ -300,16 +552,28 @@ export type Mutation_Root = {
   delete_auth_users?: Maybe<Auth_Users_Mutation_Response>;
   /** delete single row from the table: "auth.users" */
   delete_auth_users_by_pk?: Maybe<Auth_Users>;
+  /** delete data from the table: "file" */
+  delete_file?: Maybe<File_Mutation_Response>;
+  /** delete single row from the table: "file" */
+  delete_file_by_pk?: Maybe<File>;
   /** insert data into the table: "auth.users" */
   insert_auth_users?: Maybe<Auth_Users_Mutation_Response>;
   /** insert a single row into the table: "auth.users" */
   insert_auth_users_one?: Maybe<Auth_Users>;
+  /** insert data into the table: "file" */
+  insert_file?: Maybe<File_Mutation_Response>;
+  /** insert a single row into the table: "file" */
+  insert_file_one?: Maybe<File>;
   login?: Maybe<LoginResult>;
   register?: Maybe<RegisterResult>;
   /** update data of the table: "auth.users" */
   update_auth_users?: Maybe<Auth_Users_Mutation_Response>;
   /** update single row of the table: "auth.users" */
   update_auth_users_by_pk?: Maybe<Auth_Users>;
+  /** update data of the table: "file" */
+  update_file?: Maybe<File_Mutation_Response>;
+  /** update single row of the table: "file" */
+  update_file_by_pk?: Maybe<File>;
 };
 
 
@@ -326,6 +590,18 @@ export type Mutation_RootDelete_Auth_Users_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_FileArgs = {
+  where: File_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_File_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Auth_UsersArgs = {
   objects: Array<Auth_Users_Insert_Input>;
   on_conflict?: Maybe<Auth_Users_On_Conflict>;
@@ -336,6 +612,20 @@ export type Mutation_RootInsert_Auth_UsersArgs = {
 export type Mutation_RootInsert_Auth_Users_OneArgs = {
   object: Auth_Users_Insert_Input;
   on_conflict?: Maybe<Auth_Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_FileArgs = {
+  objects: Array<File_Insert_Input>;
+  on_conflict?: Maybe<File_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_File_OneArgs = {
+  object: File_Insert_Input;
+  on_conflict?: Maybe<File_On_Conflict>;
 };
 
 
@@ -366,6 +656,22 @@ export type Mutation_RootUpdate_Auth_Users_By_PkArgs = {
   pk_columns: Auth_Users_Pk_Columns_Input;
 };
 
+
+/** mutation root */
+export type Mutation_RootUpdate_FileArgs = {
+  _inc?: Maybe<File_Inc_Input>;
+  _set?: Maybe<File_Set_Input>;
+  where: File_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_File_By_PkArgs = {
+  _inc?: Maybe<File_Inc_Input>;
+  _set?: Maybe<File_Set_Input>;
+  pk_columns: File_Pk_Columns_Input;
+};
+
 /** column ordering options */
 export enum Order_By {
   /** in ascending order, nulls last */
@@ -390,6 +696,12 @@ export type Query_Root = {
   auth_users_aggregate: Auth_Users_Aggregate;
   /** fetch data from the table: "auth.users" using primary key columns */
   auth_users_by_pk?: Maybe<Auth_Users>;
+  /** fetch data from the table: "file" */
+  file: Array<File>;
+  /** fetch aggregated fields from the table: "file" */
+  file_aggregate: File_Aggregate;
+  /** fetch data from the table: "file" using primary key columns */
+  file_by_pk?: Maybe<File>;
 };
 
 
@@ -415,6 +727,29 @@ export type Query_RootAuth_Users_By_PkArgs = {
   id: Scalars['Int'];
 };
 
+
+export type Query_RootFileArgs = {
+  distinct_on?: Maybe<Array<File_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Order_By>>;
+  where?: Maybe<File_Bool_Exp>;
+};
+
+
+export type Query_RootFile_AggregateArgs = {
+  distinct_on?: Maybe<Array<File_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Order_By>>;
+  where?: Maybe<File_Bool_Exp>;
+};
+
+
+export type Query_RootFile_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
 export type Subscription_Root = {
   __typename?: 'subscription_root';
   /** fetch data from the table: "auth.users" */
@@ -423,6 +758,12 @@ export type Subscription_Root = {
   auth_users_aggregate: Auth_Users_Aggregate;
   /** fetch data from the table: "auth.users" using primary key columns */
   auth_users_by_pk?: Maybe<Auth_Users>;
+  /** fetch data from the table: "file" */
+  file: Array<File>;
+  /** fetch aggregated fields from the table: "file" */
+  file_aggregate: File_Aggregate;
+  /** fetch data from the table: "file" using primary key columns */
+  file_by_pk?: Maybe<File>;
 };
 
 
@@ -446,6 +787,55 @@ export type Subscription_RootAuth_Users_AggregateArgs = {
 
 export type Subscription_RootAuth_Users_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+export type Subscription_RootFileArgs = {
+  distinct_on?: Maybe<Array<File_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Order_By>>;
+  where?: Maybe<File_Bool_Exp>;
+};
+
+
+export type Subscription_RootFile_AggregateArgs = {
+  distinct_on?: Maybe<Array<File_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Order_By>>;
+  where?: Maybe<File_Bool_Exp>;
+};
+
+
+export type Subscription_RootFile_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
+export type Timestamptz_Comparison_Exp = {
+  _eq?: Maybe<Scalars['timestamptz']>;
+  _gt?: Maybe<Scalars['timestamptz']>;
+  _gte?: Maybe<Scalars['timestamptz']>;
+  _in?: Maybe<Array<Scalars['timestamptz']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['timestamptz']>;
+  _lte?: Maybe<Scalars['timestamptz']>;
+  _neq?: Maybe<Scalars['timestamptz']>;
+  _nin?: Maybe<Array<Scalars['timestamptz']>>;
+};
+
+/** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
+export type Uuid_Comparison_Exp = {
+  _eq?: Maybe<Scalars['uuid']>;
+  _gt?: Maybe<Scalars['uuid']>;
+  _gte?: Maybe<Scalars['uuid']>;
+  _in?: Maybe<Array<Scalars['uuid']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['uuid']>;
+  _lte?: Maybe<Scalars['uuid']>;
+  _neq?: Maybe<Scalars['uuid']>;
+  _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
 export type LoginMutationVariables = Exact<{
