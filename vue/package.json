@@ -17,7 +17,7 @@
     "primeicons": "4.1.0",
     "primevue": "3.7.1",
     "subscriptions-transport-ws": "0.9.19",
-    "vue": "^3.2.6",
+    "vue": "3.2.19",
     "vue-router": "^4.0.11"
   },
   "devDependencies": {
@@ -28,7 +28,7 @@
     "@types/node": "^16.9.1",
     "@types/ws": "^7.4.7",
     "@vitejs/plugin-vue": "1.6.2",
-    "@vue/compiler-sfc": "^3.2.6",
+    "@vue/compiler-sfc": "3.2.19",
     "sass": "^1.39.2",
     "typescript": "4.4.2",
     "vite": "2.5.8",
