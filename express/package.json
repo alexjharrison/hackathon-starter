@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon ./src/index.ts -L",
     "build": "tsc",
-    "start": "tsc && node build"
+    "start": "node build"
   },
   "author": "",
   "license": "ISC",

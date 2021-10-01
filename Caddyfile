@@ -1,4 +1,4 @@
-:3000
+rocktalk.xyz
 
 handle_path /api/* {
     reverse_proxy hasura:8080
