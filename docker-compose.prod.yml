@@ -14,7 +14,7 @@ services:
       PG_PASSWORD: postgrespassword
 
   postgres:
-    image: postgres:12
+    image: postgres:14
     restart: always
     volumes:
       - db_data:/var/lib/postgresql/data
