@@ -852,6 +852,13 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'mutation_root', register?: Maybe<{ __typename?: 'RegisterResult', token: string }> };
 
+export type FileFragmentFragment = { __typename?: 'file', created_at: any, filename: string, filesize: number, id: any, mimetype: string, updated_at: any, uploaded_by: number };
+
+export type FilesStreamSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FilesStreamSubscription = { __typename?: 'subscription_root', file: Array<{ __typename?: 'file', created_at: any, filename: string, filesize: number, id: any, mimetype: string, updated_at: any, uploaded_by: number }> };
+
 export type UserFieldsFragment = { __typename?: 'auth_users', id: number, first_name: string, last_name: string, email: string };
 
 export type UsersQueryVariables = Exact<{
@@ -876,6 +883,17 @@ export type UsersStreamSubscriptionVariables = Exact<{
 
 export type UsersStreamSubscription = { __typename?: 'subscription_root', auth_users: Array<{ __typename?: 'auth_users', id: number, first_name: string, last_name: string, email: string }> };
 
+export const FileFragmentFragmentDoc = gql`
+    fragment fileFragment on file {
+  created_at
+  filename
+  filesize
+  id
+  mimetype
+  updated_at
+  uploaded_by
+}
+    `;
 export const UserFieldsFragmentDoc = gql`
     fragment UserFields on auth_users {
   id
@@ -905,6 +923,17 @@ export const RegisterDocument = gql`
 
 export function useRegisterMutation() {
   return Urql.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument);
+};
+export const FilesStreamDocument = gql`
+    subscription FilesStream {
+  file {
+    ...fileFragment
+  }
+}
+    ${FileFragmentFragmentDoc}`;
+
+export function useFilesStreamSubscription<R = FilesStreamSubscription>(options: Omit<Urql.UseSubscriptionArgs<never, FilesStreamSubscriptionVariables>, 'query'> = {}, handler?: Urql.SubscriptionHandlerArg<FilesStreamSubscription, R>) {
+  return Urql.useSubscription<FilesStreamSubscription, R, FilesStreamSubscriptionVariables>({ query: FilesStreamDocument, ...options }, handler);
 };
 export const UsersDocument = gql`
     query Users($distinct_on: [auth_users_select_column!], $limit: Int, $offset: Int, $order_by: [auth_users_order_by!], $where: auth_users_bool_exp) {

@@ -34,13 +34,13 @@ rebuild-prod:
 	@$(DC) -f docker-compose.prod.yml down
 	@$(DC) down
 	docker volume create --name=caddy_data
-	docker volume create --name=file_uploads
+	# docker volume create --name=file_uploads
 	@$(DC) -f docker-compose.prod.yml build --no-cache
 	@$(DC) -f docker-compose.prod.yml up -d
 
 reboot-prod:
 	@$(DC) down
 	@$(DC) -f docker-compose.prod.yml down
-	@$(DC) -f docker-compose.prod.yml build 
+	# @$(DC) -f docker-compose.prod.yml build 
 	@$(DC) -f docker-compose.prod.yml up -d
 

@@ -1,0 +1,15 @@
+fragment fileFragment on file {
+  created_at
+  filename
+  filesize
+  id
+  mimetype
+  updated_at
+  uploaded_by
+}
+
+subscription FilesStream {
+  file {
+    ...fileFragment
+  }
+}

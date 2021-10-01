@@ -1,10 +1,11 @@
-rocktalk.xyz
+:3000
 
 handle_path /api/* {
     reverse_proxy hasura:8080
 }
-handle_path /files/* {
-    reverse_proxy express:8000/files
+
+handle /files/* {
+    reverse_proxy express:8000
 }
 
 handle {

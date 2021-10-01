@@ -5,9 +5,11 @@ import { File } from "../api";
 import { pg } from "../config/postgres";
 import { jwtMiddleware } from "../services/jwt";
 
+const storagePath = "/usr/src/app/static/";
+
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, "/usr/src/app/static");
+    cb(null, storagePath);
   },
   async filename(req, file, cb) {
     const id = v4();
@@ -30,7 +32,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({
-  dest: "static",
   limits: { fileSize: 50_000_000 },
   storage,
 }).single("file");
@@ -39,6 +40,7 @@ const router = Router();
 
 // return file by uuid key
 router.get("/:key", async (req, res) => {
+  console.log(req.route);
   const data = await pg.query<File>(`select * from public.file where id=$1`, [
     req.params.key,
   ]);
@@ -47,12 +49,14 @@ router.get("/:key", async (req, res) => {
     res.status(404).send();
     return;
   }
-  res.download(`/usr/src/app/static/${file.filename}`, file.filename);
+  console.log(file);
+  res.download(storagePath + file.id, file.filename);
 });
 
 // save file to /static folder
 // save metadata to db
-router.post("/", jwtMiddleware, (req, res) => {
+router.post("/upload", jwtMiddleware, (req, res) => {
+  console.log(req.route);
   upload(req, res, (err) => {
     if (err) {
       res.status(400).json({ message: "wtf mate" });

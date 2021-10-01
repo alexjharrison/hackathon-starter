@@ -849,6 +849,13 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'mutation_root', register?: Maybe<{ __typename?: 'RegisterResult', token: string }> };
 
+export type FileFragmentFragment = { __typename?: 'file', created_at: any, filename: string, filesize: number, id: any, mimetype: string, updated_at: any, uploaded_by: number };
+
+export type FilesStreamSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FilesStreamSubscription = { __typename?: 'subscription_root', file: Array<{ __typename?: 'file', created_at: any, filename: string, filesize: number, id: any, mimetype: string, updated_at: any, uploaded_by: number }> };
+
 export type UserFieldsFragment = { __typename?: 'auth_users', id: number, first_name: string, last_name: string, email: string };
 
 export type UsersQueryVariables = Exact<{
